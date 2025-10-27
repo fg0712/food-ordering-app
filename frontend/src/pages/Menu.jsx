@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useCart } from '../context/CartContext';
 
 export default function Menu() {
   const [menu, setMenu] = useState([]);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     fetch('http://localhost:5000/api/menu')
@@ -17,7 +19,10 @@ export default function Menu() {
           <div key={item.id} className="border p-4 rounded">
             <h3 className="font-bold">{item.name}</h3>
             <p>${item.price}</p>
-            <button className="bg-blue-500 text-white px-3 py-1 rounded mt-2">
+            <button 
+              onClick={() => addToCart(item)}
+              className="bg-blue-500 text-white px-3 py-1 rounded mt-2"
+            >
               Add to Cart
             </button>
           </div>
